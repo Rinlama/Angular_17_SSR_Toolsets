@@ -45,7 +45,7 @@ export class HomeComponent {
   );
 
   constructor() {
-    effect(() => {
+    effect((onCleanup) => {
       console.log(this.cart());
     });
   }
