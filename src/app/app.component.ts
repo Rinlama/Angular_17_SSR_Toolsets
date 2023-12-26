@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { CheckboxModule } from 'primeng/checkbox';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './layout/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, CheckboxModule],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular_toolsets';
+  ngOnInit(): void {}
 }

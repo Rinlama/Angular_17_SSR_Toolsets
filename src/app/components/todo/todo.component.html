@@ -1,0 +1,13 @@
+@defer {
+<ul>
+  @for (item of this.todo; track item.id) {
+  <li>{{ item.id }}</li>
+  } @empty {
+  <li>There are no items.</li>
+  }
+</ul>
+} @placeholder (minimum 500ms) {
+<p>Placeholder content</p>
+}@error {
+<p>Failed to load the calendar</p>
+}
