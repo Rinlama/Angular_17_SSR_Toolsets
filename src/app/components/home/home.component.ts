@@ -2,23 +2,12 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   Signal,
+  signal,
   WritableSignal,
   computed,
   effect,
-  signal,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { map, of, timer } from 'rxjs';
-
-interface IItem {
-  name: string;
-  qty: number;
-  price: number;
-}
-
-interface ICart {
-  items: Array<IItem>;
-}
 
 @Component({
   selector: 'app-home',
@@ -28,43 +17,19 @@ interface ICart {
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  cart: WritableSignal<any> = signal<ICart>({
-    items: [],
-  });
+  food: WritableSignal<string> = signal<string>('dumpling');
+  price: WritableSignal<number> = signal<number>(10);
 
-  // total = this.cart().items.reduce(
-  //   (total: number, item: IItem) => total + item.qty * item.price,
-  //   0
-  // );
-
-  total: Signal<number> = computed(() =>
-    this.cart().items.reduce(
-      (total: number, item: IItem) => total + item.qty * item.price,
-      0
-    )
-  );
+  total = computed(() => this.price() * 10);
 
   constructor() {
-    effect((onCleanup) => {
-      console.log(this.cart());
+    effect(() => {
+      console.log(this.food());
     });
   }
 
-  ngOnInit() {}
-
-  AddCart() {
-    this.cart.update((d) => {
-      return {
-        ...d,
-        items: [
-          ...d.items,
-          {
-            name: 'momo',
-            qty: 1,
-            price: 2,
-          },
-        ],
-      };
-    });
+  onChangeSignal() {
+    this.food.set('sandwich');
+    this.price.update((pre: number) => pre + 5);
   }
 }

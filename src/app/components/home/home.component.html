@@ -1,4 +1,8 @@
-<p-button label="Add" (click)="AddCart()"></p-button>
+<p-button (click)="onChangeSignal()">Button</p-button>
 
 <br />
-{{ this.cart() | json }}{{ this.total() }}
+Food: {{ food() }}
+<br />
+Price : {{ price() }}
+<br />
+Total : {{ total() }}
