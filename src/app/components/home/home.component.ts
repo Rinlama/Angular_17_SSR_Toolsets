@@ -1,13 +1,22 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  Signal,
-  signal,
   WritableSignal,
   computed,
   effect,
+  signal,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+
+interface IItem {
+  name: string;
+  price: number;
+  qty: number;
+}
+
+interface ICarts {
+  items: Array<IItem>;
+}
 
 @Component({
   selector: 'app-home',
@@ -17,19 +26,35 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  food: WritableSignal<string> = signal<string>('dumpling');
-  price: WritableSignal<number> = signal<number>(10);
+  carts: WritableSignal<ICarts> = signal<ICarts>({
+    items: [],
+  });
 
-  total = computed(() => this.price() * 10);
+  total = computed(() =>
+    this.carts().items.reduce(
+      (total: number, item: IItem) => total + item.qty * item.price,
+      0
+    )
+  );
 
   constructor() {
     effect(() => {
-      console.log(this.food());
+      console.log(this.carts());
     });
   }
 
-  onChangeSignal() {
-    this.food.set('sandwich');
-    this.price.update((pre: number) => pre + 5);
+  addItem() {
+    this.carts.update((state: ICarts) => {
+      return {
+        items: [
+          ...state.items,
+          {
+            name: 'dumpling',
+            price: 10,
+            qty: 1,
+          },
+        ],
+      };
+    });
   }
 }

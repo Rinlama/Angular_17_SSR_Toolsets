@@ -1,8 +1,4 @@
-<p-button (click)="onChangeSignal()">Button</p-button>
+<p-button (click)="addItem()">Add Item</p-button> <br /><br />
 
-<br />
-Food: {{ food() }}
-<br />
-Price : {{ price() }}
-<br />
-Total : {{ total() }}
+Total: {{ total() }} <br /><br />
+Carts: {{ carts() | json }} <br />
